@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!-- 为这个mapper指定一个唯一的namespace，namespace的值习惯上设置成包名+sql映射文件名，这样就能够保证namespace的值是唯一的 
+	例如namespace="me.gacl.mapping.adminMapper"就是me.gacl.mapping(包名)+adminMapper(adminMapper.xml文件去除后缀) -->
+
+<mapper namespace="com.cjn.mapping.AdminOperation">
+	<!-- 为了返回list 类型而定义的returnMap -->
+	<resultMap type="Admin" id="resultListAdmin">
+		<id column="AdminId" property="AdminId" />
+		<result column="AdminName" property="AdminName" />
+		<result column="AdminPassword" property="AdminPassword" />
+	</resultMap>
+	<!-- 在select标签中编写查询的SQL语句， 设置select标签的id属性为getAdmin，id属性值必须是唯一的，不能够重复 使用parameterType属性指明查询时使用的参数类型，resultType属性指明查询返回的结果集类型 
+		resultType="Admin"就表示将查询结果封装成一个Admin类的对象返回 Admin类就是admin表所对应的实体类 -->
+	<!-- 根据id查询得到一个admin对象 -->
+	<select id="selectAdminByID" parameterType="int" resultType="Admin">
+		select * from admin where AdminId=#{AdminId}
+	</select>
+	<!-- 查询得到所有admin对象 -->
+	<select id="selectAdmins" parameterType="string" resultMap="resultListAdmin">
+		select * from admin
+	</select>
+	<!-- 添加admin -->
+	<insert id="addAdmin" parameterType="Admin" useGeneratedKeys="true"
+		keyProperty="AdminId">
+		insert into admin(AdminName,AdminPassword)
+		values(#{AdminName},#{AdminPassword})
+	</insert>
+	<!-- 更新admin -->
+	<update id="updateAdmin" parameterType="Admin">
+		update admin set
+		AdminName=#{AdminName},AdminPassword=#{AdminPassword} where
+		AdminId=#{AdminId}
+	</update>
+	<!-- 删除admin -->
+	<delete id="deleteAdmin" parameterType="int">
+		delete from admin where
+		AdminId=#{AdminId}
+	</delete>
+</mapper>

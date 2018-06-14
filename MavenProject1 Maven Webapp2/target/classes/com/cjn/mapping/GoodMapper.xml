@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.cjn.mapping.GoodOperation">
+	<!-- 为了返回list 类型而定义的returnMap -->
+	<resultMap type="Good" id="resultListGood">
+		<id column="GoodId" property="GoodId" />
+		<result column="GoodName" property="GoodName" />
+		<result column="GoodPrice" property="GoodPrice" />
+		<result column="GoodType" property="GoodType.TypeName" />
+		<result column="GoodStore" property="GoodStore" />
+	</resultMap>
+	<!-- 在select标签中编写查询的SQL语句， 设置select标签的id属性为getGood，id属性值必须是唯一的，不能够重复 使用parameterType属性指明查询时使用的参数类型，resultType属性指明查询返回的结果集类型 
+		resultType="Good"就表示将查询结果封装成一个Good类的对象返回 Good类就是good表所对应的实体类 -->
+	<!-- 根据id查询得到一个good对象 -->
+	<select id="selectGoodByID" parameterType="int" resultType="Good">
+		select * from good where GoodId=#{GoodId}
+	</select>
+	<!-- 查询得到所有good对象 -->
+	<select id="selectGoods" parameterType="string" resultMap="resultListGood">
+		select * from good
+	</select>
+	<!-- 添加good -->
+	<insert id="addGood" parameterType="Good" useGeneratedKeys="true"
+		keyProperty="GoodId">
+		insert into good(GoodName,GoodPrice,GoodType,GoodStore)
+		values(#{GoodName},#{GoodPrice},#{GoodType.TypeName},#{GoodStore})
+	</insert>
+	<!-- 更新good -->
+	<update id="updateGood" parameterType="Good">
+		update good set
+		GoodName=#{GoodName},GoodPrice=#{GoodPrice},GoodType=#{GoodType.TypeName},GoodStore=#{GoodStore}
+		where GoodId=#{GoodId}
+	</update>
+	<!-- 删除good -->
+	<delete id="deleteGood" parameterType="int">
+		delete from good where
+		GoodId=#{GoodId}
+	</delete>
+</mapper>

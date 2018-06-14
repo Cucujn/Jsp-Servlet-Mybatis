@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.cjn.mapping.TypeOperation">
+	<!-- 为了返回list 类型而定义的returnMap -->
+	<resultMap type="Type" id="resultListType">
+		<id column="TypeId" property="TypeId" />
+		<result column="TypeName" property="TypeName" />
+	</resultMap>
+	<!-- 在select标签中编写查询的SQL语句， 设置select标签的id属性为getType，id属性值必须是唯一的，不能够重复 使用parameterType属性指明查询时使用的参数类型，resultType属性指明查询返回的结果集类型 
+		resultType="Type"就表示将查询结果封装成一个Type类的对象返回 Type类就是type表所对应的实体类 -->
+	<!-- 根据id查询得到一个type对象 -->
+	<select id="selectTypeByID" parameterType="int" resultType="Type">
+		select * from type where TypeId=#{TypeId}
+	</select>
+	<!-- 查询得到所有type对象 -->
+	<select id="selectTypes" parameterType="string" resultMap="resultListType">
+		select * from type
+	</select>
+	<!-- 添加type -->
+	<insert id="addType" parameterType="Type"
+		useGeneratedKeys="true" keyProperty="TypeId">
+		insert into type(TypeName) values(#{TypeName})
+	</insert>
+	<!-- 更新type -->
+	<update id="updateType" parameterType="Type">
+		update type set TypeName=#{TypeName} where TypeId=#{TypeId}
+	</update>
+	<!-- 删除type -->
+	<delete id="deleteType" parameterType="int">
+		delete from type where TypeId=#{TypeId}
+	</delete>
+</mapper>

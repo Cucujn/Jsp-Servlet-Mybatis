@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE configuration PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-config.dtd">
+<configuration>
+	<typeAliases>
+		<!--将包名简写，以便后面程序的书写 -->
+		<typeAlias alias="Admin" type="com.cjn.entity.Admin" />
+		<typeAlias alias="Good" type="com.cjn.entity.Good" />
+		<typeAlias alias="Type" type="com.cjn.entity.Type" />
+	</typeAliases>
+
+	<environments default="development">
+		<environment id="development">
+			<transactionManager type="JDBC" />
+			<dataSource type="POOLED">
+				<!-- 配置数据库连接信息 -->
+				<property name="driver" value="com.mysql.jdbc.Driver" />
+				<property name="url" value="jdbc:mysql://127.0.0.1:3306/shopsys" />
+				<property name="username" value="root" />
+				<property name="password" value="123456" />
+			</dataSource>
+		</environment>
+	</environments>
+	<mappers>
+		<!-- 加载配置文件 -->
+		<mapper resource="com/cjn/mapping/AdminMapper.xml" />
+		<mapper resource="com/cjn/mapping/GoodMapper.xml" />
+		<mapper resource="com/cjn/mapping/TypeMapper.xml" />
+	</mappers>
+</configuration>
